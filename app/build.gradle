@@ -1,0 +1,33 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'app.maxund'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'app.maxund'
+        minSdk 26
+        targetSdk 35
+        versionCode 3
+        versionName '0.3.0-experimental'
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    sourceSets.test.java.srcDir('../native/privacy')
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            def testHome = layout.buildDirectory.dir('test-home').get().asFile
+            systemProperty 'user.home', testHome.absolutePath
+            doFirst { testHome.mkdirs() }
+            systemProperty 'robolectric.dependency.repo.url', 'https://repo.maven.apache.org/maven2'
+            ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort', 'javax.net.ssl.trustStore'].each { key ->
+                if (System.getProperty(key) != null) systemProperty key, System.getProperty(key)
+            }
+        }
+    }
+}
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.google.zxing:core:3.5.3'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20240303'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+}
