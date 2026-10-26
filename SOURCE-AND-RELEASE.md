@@ -1,9 +1,13 @@
 # Исходники, сборка и публикация
 
+Актуальная версия: **Undetect 2**, `26.34.1-undetect.2`, code 6857. [Изменения](UPDATE.md).
+Предыдущая версия подтверждена владельцем успешным входом; серверные сценарии новой версии требуют новой проверки.
+
 ## Что доступно
 
-[Скачать полный архив native-исходников, 99 МБ](https://gofile.io/d/aKCwUMMg).
-SHA-256: `c2e9e8c90cc188ad1bcae9736e1a0b2fc7e6334ed36f89a0e9329294c6449e12`.
+[Полный архив Undetect 2, 99 МБ](https://gofile.io/d/A5qXbns0): `MAXund-Native-Undetect-2-full-source.zip`.
+SHA-256: `2bae3b46ab840886b8349417055faa0ac1a5534f92c757eb9fbbc185e782851b`.
+Исторический архив первой версии не содержит новых настроек Undetect 2.
 
 В GitHub опубликованы все написанные для MAXund патчи, Java-код PrivacyLifecycle, сборщик, аудит, тесты и документы. Каталог `app/` — старый самостоятельный прототип, не код новой native-сборки.
 
@@ -35,15 +39,15 @@ apksigner sign --ks YOUR_PRIVATE_KEYSTORE --out MAXund.apk aligned.apk
 apksigner verify --verbose MAXund.apk
 ```
 
-Не применяйте `patch.py` второй раз к `patched-native/`: патч рассчитан на чистую upstream-базу. Инструменты подписи должны быть в PATH; пароли вводите локально. Свой ключ храните приватно.
+Не применяйте `patch.py` или `undetect_patch.py` второй раз к `patched-native/`: патч рассчитан на чистую upstream-базу. Инструменты подписи должны быть в PATH; пароли вводите локально. Свой ключ храните приватно.
 
 Публичный архив не содержит ключей подписи и данных аккаунта. С новым ключом подпись и хэш APK изменятся; обновление существующей установки возможно только с прежним ключом. Побайтовое совпадение APK не гарантируется.
 
-## Как разместить версию в GitHub Releases
+## Как разместить Undetect 2 в GitHub Releases
 
 1. Откройте https://github.com/lor4ici-cmyk/MAX-undetect/releases.
-2. Откройте черновик `v26.34.1-maxund.1` и нажмите редактирование. Если черновика нет — **Create a new release**, tag `v26.34.1-maxund.1`, target `main`.
-3. В описание вставьте сведения из `CHANGES.md` и ограничения из `VALIDATION.md`. Отметьте **pre-release**.
+2. Нажмите **Create a new release**, tag `v26.34.1-maxund.2`, target `main`. Старый черновик `v26.34.1-maxund.1` относится к первой версии.
+3. В описание вставьте сведения из `UPDATE.md`, название — `MAXund Native — Undetect 2`. Отметьте **pre-release**.
 4. В поле **Attach binaries** перетащите APK, его `.sha256` и полный архив исходников. Дождитесь окончания загрузки.
 5. Нажмите **Publish release**. Скопируйте ссылку на APK из раздела Assets.
 

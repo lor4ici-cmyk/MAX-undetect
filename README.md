@@ -1,6 +1,12 @@
-# MAXund Native — Android 13+
+# MAXund Native — Undetect 2 · Android 13+
 
-**Экспериментальная модификация MAX 26.34.1. Полное отсутствие слежки не гарантируется.**
+**Новая экспериментальная версия: 26.34.1-undetect.2 (6857). Полное отсутствие слежки не гарантируется.**
+
+[Что нового в Undetect 2](UPDATE.md). Новые настройки: **Настройки → Undetect · Конфиденциальность**. Все новые тумблеры по умолчанию выключены.
+
+[Скачать APK Undetect 2, 128 МБ](https://gofile.io/d/xivHyqyH) · [Полный архив исходников Undetect 2, 99 МБ](https://gofile.io/d/A5qXbns0) · [Описание обновления](UPDATE.md)
+
+Предыдущая версия:
 
 [Скачать проверенный APK, 128 МБ](https://gofile.io/d/G0ioaWtZ) ·
 [Релизы GitHub](https://github.com/lor4ici-cmyk/MAX-undetect/releases) ·

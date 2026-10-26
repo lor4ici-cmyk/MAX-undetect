@@ -18,11 +18,18 @@ try:
   if shell('getprop ro.boot.qemu.avd_name').strip()!='MAXund':raise RuntimeError('Fresh reset allowed only for the dedicated MAXund fixture')
   print('Removing earlier account-free test installation from the dedicated fixture...',flush=True)
   print(shell('pm uninstall ru.oneme.app'),flush=True)
- print('Installing final audited APK in disposable emulator...',flush=True)
- x.push(str(apk),'/data/local/tmp/MAXund-final.apk',read_timeout_s=180)
- installed=shell('pm install -r /data/local/tmp/MAXund-final.apk');print(installed,flush=True)
- if 'Success' not in installed:raise RuntimeError('Guest installation failed')
- report['install']=installed.strip()
+ if '--skip-install' in sys.argv[2:]:
+  path=shell('pm path ru.oneme.app').strip().removeprefix('package:')
+  if not path.startswith('/data/app/') or '\n' in path:raise RuntimeError('Unexpected installed APK path')
+  digest=shell('sha256sum '+path).split()[0]
+  if digest!=report['apk_sha256']:raise RuntimeError('Installed APK does not match the exact audited APK')
+  report['install']='existing exact APK verified by SHA-256'
+ else:
+  print('Installing final audited APK in disposable emulator...',flush=True)
+  x.push(str(apk),'/data/local/tmp/MAXund-final.apk',read_timeout_s=180)
+  installed=x.shell('pm install -r /data/local/tmp/MAXund-final.apk',read_timeout_s=600,timeout_s=660,transport_timeout_s=600);print(installed,flush=True)
+  if 'Success' not in installed:raise RuntimeError('Guest installation failed')
+  report['install']=installed.strip()
  shell('logcat -b crash -c')
  report['launch_command']=shell('am start -W -n ru.oneme.app/one.me.android.MainActivity')
  print(report['launch_command'],flush=True)

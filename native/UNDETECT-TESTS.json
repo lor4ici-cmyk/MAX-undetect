@@ -1,0 +1,28 @@
+{
+  "version": "26.34.1-undetect.2",
+  "suites": [
+    {
+      "name": "UndetectBridgeTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "app.maxund.PrivacyLifecycleTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "app.maxund.privacy.UndetectTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "server_tested": false,
+  "note": "Protocol fixtures do not emulate MAX server"
+}

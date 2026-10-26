@@ -23,7 +23,7 @@ public final class PrivacyLifecycle implements Application.ActivityLifecycleCall
         }
     };
     private PrivacyLifecycle(Application app) { application = app; }
-    public static void install(Application app) { app.registerActivityLifecycleCallbacks(new PrivacyLifecycle(app)); }
+    public static void install(Application app) { Undetect.install(app); app.registerActivityLifecycleCallbacks(new PrivacyLifecycle(app)); }
     public void onActivityCreated(Activity a, Bundle b) { a.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE); }
     public void onActivityStarted(Activity a) {
         started++; handler.removeCallbacks(this); handler.removeCallbacks(finishRevocation);
@@ -34,6 +34,7 @@ public final class PrivacyLifecycle implements Application.ActivityLifecycleCall
     }
     public void run() {
         if (started != 0) return;
+        Undetect.background();
         // Background camera/microphone calls are deliberately ended by this policy.
         for (String name : new String[]{"one.me.calls.impl.service.VoIpCallService", "one.me.calls.impl.service.CallServiceImpl"}) {
             try { application.stopService(new Intent().setClassName(application.getPackageName(), name)); }
@@ -52,7 +53,7 @@ public final class PrivacyLifecycle implements Application.ActivityLifecycleCall
             }
         }
     }
-    public void onActivityResumed(Activity a) { a.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE); }
+    public void onActivityResumed(Activity a) { a.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE); Undetect.resume(a); }
     public void onActivityPaused(Activity a) { }
     public void onActivitySaveInstanceState(Activity a, Bundle b) { }
     public void onActivityDestroyed(Activity a) { }

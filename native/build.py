@@ -21,8 +21,9 @@ source=next(base.iterdir())/'min_smali';out=WORK/'source'
 if out.exists():shutil.rmtree(out)
 shutil.copytree(source,out,ignore=shutil.ignore_patterns('build'))
 run(['python3',ROOT/'patch.py',out])
+run(['python3',ROOT/'undetect_patch.py',out])
 classes=WORK/'helper-classes';classes.mkdir(exist_ok=True);dex=WORK/'helper-dex';dex.mkdir(exist_ok=True)
-run([JDK/'bin/javac','-source','8','-target','8','-classpath',SDK/'platforms/android-35/android.jar','-d',classes,ROOT/'privacy/PrivacyLifecycle.java'])
+run([JDK/'bin/javac','-source','8','-target','8','-classpath',SDK/'platforms/android-35/android.jar','-d',classes,*(ROOT/'privacy').glob('*.java')])
 run([JDK/'bin/java','-cp',BT/'lib/d8.jar','com.android.tools.r8.D8','--min-api','26','--lib',SDK/'platforms/android-35/android.jar','--output',dex,*(classes/'app/maxund/privacy').rglob('*.class')])
 run([JDK/'bin/javac','-cp',APKTOOL,'-d',classes,ROOT/'tools/Decode.java'])
 # Keep privacy helper in its own dex to avoid main dex method limits.

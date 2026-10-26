@@ -1,12 +1,12 @@
 {
-  "apk_sha256": "85e1eafd09c4589d5cdad8a573fd1b0e84ceae30f3d3252634c991b8366a4ec2",
+  "apk_sha256": "09da37bbadfd0f68a5191b688f2c48b6d7b88d4045c91924d5dee1cdf7701718",
   "test_account_used": false,
-  "install": "Success",
-  "launch_command": "Starting: Intent { cmp=ru.oneme.app/one.me.android.MainActivity }\nStatus: timeout\nLaunchState: UNKNOWN (-1)\nActivity: ru.oneme.app/one.me.android.MainActivity\nWaitTime: 12791\nComplete\n",
+  "install": "existing exact APK verified by SHA-256",
+  "launch_command": "Starting: Intent { cmp=ru.oneme.app/one.me.android.MainActivity }\nStatus: ok\nLaunchState: WARM\nActivity: ru.oneme.app/one.me.android.MainActivity\nTotalTime: 9063\nWaitTime: 9362\nComplete\n",
   "native_phone_screen_created": true,
   "process_started": true,
   "fresh_crash_log_empty": true,
-  "permissions_before_background": "        android.permission.CAMERA: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]\n        android.permission.RECORD_AUDIO: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]\n",
+  "permissions_before_background": "        android.permission.CAMERA: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|ONE_TIME]\n        android.permission.RECORD_AUDIO: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|ONE_TIME]\n",
   "permissions_after_background": "        android.permission.CAMERA: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|ONE_TIME]\n        android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|ONE_TIME]\n",
   "process_alive_after_background": false,
   "result": "passed"

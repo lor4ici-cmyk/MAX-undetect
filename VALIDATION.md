@@ -1,4 +1,6 @@
-# MAXund Native — проверка 26 октября 2026
+# MAXund Native — проверка первой сборки 26 октября 2026
+
+Это исторический отчёт версии 1. Для Undetect 2 см. [UPDATE.md](UPDATE.md) и `native/UNDETECT-TESTS.json`; вход новой версии этим отчётом не подтверждается.
 
 Исходник: MIN Safe MAX, ad2568aba95a16fa140713a7ae273dc7e4b004d6, версия 26.34.1.
 APK SHA-256: `85e1eafd09c4589d5cdad8a573fd1b0e84ceae30f3d3252634c991b8366a4ec2`. Минимальная версия Android — 13.

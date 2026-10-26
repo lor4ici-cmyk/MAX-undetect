@@ -52,7 +52,7 @@ def methods(data):
      length=struct.unpack_from('<I',data,code+12)[0]
      result.setdefault(ids[index],[]).append(data[code+16:code+16+length*2])
  return ids,result
-all_methods={};hook=False;dex_count=0
+all_methods={};hook=False;dex_count=0;undetect_hooks=set()
 with zipfile.ZipFile(APK) as archive:
  for name in archive.namelist():
   if re.fullmatch(r'classes\d*\.dex',name):
@@ -60,6 +60,11 @@ with zipfile.ZipFile(APK) as archive:
    assert data[12:32]==hashlib.sha1(data[32:]).digest(),name+' SHA1'
    assert struct.unpack_from('<I',data,8)[0]==zlib.adler32(data[12:])&0xffffffff,name+' Adler32'
    ids,items=methods(data);all_methods.update(items)
+   for idx,(owner,method) in enumerate(ids):
+    if owner=='Lapp/maxund/privacy/Undetect;':
+     for caller,codes in items.items():
+      if any(any(code[off] in (0x71,0x77) and code[off+2:off+4]==struct.pack('<H',idx) for off in range(0,len(code)-5,2)) for code in codes):
+       undetect_hooks.add((caller[0],caller[1],method))
    assert ('Landroid/content/pm/PackageManager;','canRequestPackageInstalls') not in ids,'Removed permission still queried by compiled code'
    for index,item in enumerate(ids):
     if item==('Lapp/maxund/privacy/PrivacyLifecycle;','install'):
@@ -73,6 +78,16 @@ worker=all_methods[('Lone/me/android/DailyAnalyticsWorker;','d')]
 assert len(worker)==1 and len(worker[0])<=16,'Daily analytics worker must only construct success'
 assert ('Lapp/maxund/privacy/PrivacyLifecycle;','run') in all_methods
 assert hook,'Application must register privacy lifecycle'
-report={'apk':str(APK),'sha256':hashlib.sha256(APK.read_bytes()).hexdigest(),'dex_files_verified':dex_count,'min_sdk':33,'package':'ru.oneme.app','permissions':sorted(names),'checks':'manifest, internal DEX integrity, compiled MyTracker no-ops, worker, lifecycle registration passed','live_login':'not verified'}
+assert "versionCode='6857'" in badging and "versionName='26.34.1-undetect.2'" in badging
+for owner,method,target in [
+ ('Lq7c;','g','beforeRequest'),('Loyi;','a','interactive'),
+ ('Lytc;','h','confirmCall'),('Lone/me/settings/SettingsListScreen;','onCreateView','settings'),
+ ('Lru/ok/tamtam/upload/workers/DownloadAttachesWorker;','k','blockAutoload')]:
+ assert (owner,method,target) in undetect_hooks,(owner,method,target)
+assert 'app.maxund.privacy.UndetectActivity' in xml
+assert 'app.maxund.privacy.UndetectLockActivity' in xml
+assert ('Lapp/maxund/privacy/Undetect;','notification') in all_methods
+assert len([h for h in undetect_hooks if h[2]=='notification'])==6
+report={'version':'26.34.1-undetect.2','undetect_hooks':sorted(list(undetect_hooks)),'apk':str(APK),'sha256':hashlib.sha256(APK.read_bytes()).hexdigest(),'dex_files_verified':dex_count,'min_sdk':33,'package':'ru.oneme.app','permissions':sorted(names),'checks':'manifest, DEX integrity, tracker no-ops, lifecycle, Undetect send/interactive/settings/call/autoload and six notification hooks passed','live_login':'not verified'}
 (ROOT/'work/audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({k:v for k,v in report.items() if k!='permissions'},ensure_ascii=False,indent=2))

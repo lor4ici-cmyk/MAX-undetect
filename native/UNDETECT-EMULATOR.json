@@ -1,0 +1,11 @@
+{
+  "version": "26.34.1-undetect.2",
+  "real_account_used": false,
+  "apk_sha256": "09da37bbadfd0f68a5191b688f2c48b6d7b88d4045c91924d5dee1cdf7701718",
+  "launch": "Starting: Intent { cmp=ru.oneme.app/app.maxund.privacy.UndetectActivity }\nWarning: Activity not started, intent has been delivered to currently running top-most instance.\nStatus: ok\nLaunchState: UNKNOWN (0)\nActivity: ru.oneme.app/app.maxund.privacy.UndetectActivity\nTotalTime: 0\nWaitTime: 94\nComplete\n",
+  "measured_switch_present": true,
+  "activity_present": true,
+  "switch_count": 9,
+  "fresh_crash_log_empty": true,
+  "result": "passed"
+}
